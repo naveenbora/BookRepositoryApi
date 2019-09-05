@@ -2,9 +2,7 @@ using System;
 using Xunit;
 using DAL;
 using WebApiBasic;
-using System.Collections.Generic;
 using System.Linq;
-using DAL.Model;
 using WebApiBasic.Controllers;
 using ServiceLayer;
 
@@ -19,7 +17,9 @@ namespace BooksApiTests
             Services services = new Services(bookRepository);
             var result = services.GetBooks();
             Assert.Equal("No Books Found", result.ErrorMessage);
+            Assert.Equal(404, result.StatusCode);
         }
     }
+
 
 }

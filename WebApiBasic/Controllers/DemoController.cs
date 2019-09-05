@@ -34,7 +34,7 @@ namespace WebApiBasic.Controllers
         [HttpGet("{id}")]
         public Result RetrieveById(int id)
         {
-            var result= services.GetBookNameById(id);
+            var result= services.GetBookById(id);
             HttpContext.Response.StatusCode = result.StatusCode;
             return result;
         }

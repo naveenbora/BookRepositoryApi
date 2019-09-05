@@ -34,7 +34,7 @@ namespace ServiceLayer
             }
             return result;
         }
-        public Result GetBookNameById(int id)
+        public Result GetBookById(int id)
         {
             Result result = new Result();
             if(id<0)
