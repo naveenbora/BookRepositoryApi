@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿
+using DAL;
 using DAL.Model;
 using System;
 using System.Linq;
@@ -75,6 +76,7 @@ namespace ServiceLayer
             else
             {
                 result.ErrorMessage = "No Id Match";
+                result.StatusCode = 404;
                 return result;
             }
         }
