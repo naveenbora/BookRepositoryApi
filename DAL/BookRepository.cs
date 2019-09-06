@@ -25,7 +25,7 @@ namespace DAL
                 else
                     return false;            
         }
-        public bool ReplaceEmployee( Book book)
+        public bool ReplaceBook( Book book)
         {
             var _book = books.Find(X => X.Id ==book.Id);
             if (_book == null)

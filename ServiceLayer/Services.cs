@@ -68,7 +68,7 @@ namespace ServiceLayer
 
             if (result.ErrorMessage != null)
                 return result;
-            if( _BookRepository.ReplaceEmployee(book))
+            if( _BookRepository.ReplaceBook(book))
             {
                 return result;
 
