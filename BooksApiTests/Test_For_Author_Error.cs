@@ -5,12 +5,12 @@ using ServiceLayer;
 
 namespace BooksApiTests
 {
-    public class Test_For_Name_Error
+    public class Test_For_Author_Error
     {
         [Fact]
         public void Name_Error_Test()
         {
-            Book book = new Book { Id = 1, Name = "Naveen2", Price = 1000, Author = "Harikrishna", Category = "Joke" };
+            Book book = new Book { Id = 1, Name = "Naveen", Price = 1000, Author = "Harikrishna1", Category = "Joke" };
             BookRepository bookRepository = new BookRepository();
             Services services = new Services(bookRepository);
             var result = services.AddBook(book);
