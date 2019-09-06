@@ -17,7 +17,7 @@ namespace BooksApiTests
             var result = services.AddBook(book1);
             result = services.AddBook(book2);
 
-            Assert.Equal("ID Not Found", services.GetBookById(3).ErrorMessage);
+            Assert.Equal("ID Not Found", services.GetBookById(3).ErrorMessage[0]);
 
 
         }

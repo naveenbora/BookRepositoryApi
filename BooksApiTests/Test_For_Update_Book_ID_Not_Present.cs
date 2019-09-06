@@ -18,7 +18,7 @@ namespace BooksApiTests
             
             var result = services.Update(book1);
             Assert.Equal(404, result.StatusCode);
-            Assert.Equal("No Id Match", result.ErrorMessage);
+            Assert.Equal("No Id Match", result.ErrorMessage[0]);
 
         }
     }

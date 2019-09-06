@@ -17,7 +17,7 @@ namespace BooksApiTests
             var result = services.AddBook(book1);
             result = services.AddBook(book2);
             
-            Assert.Equal("Invalid Id, Id should be a positive number", services.GetBookById(-3).ErrorMessage);
+            Assert.Equal("Invalid Id, Id should be a positive number", services.GetBookById(-3).ErrorMessage[0]);
             
 
         }

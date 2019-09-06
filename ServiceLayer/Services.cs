@@ -23,7 +23,7 @@ namespace ServiceLayer
             if (books.Count == 0)
             {
 
-                result.ErrorMessage = "No Books Found";
+                result.ErrorMessage.Add("No Books Found");
                 result.StatusCode = 404;
                 result.Value = null;
                 
@@ -40,14 +40,14 @@ namespace ServiceLayer
             Result result = new Result();
             if(id<0)
             {
-                result.ErrorMessage = "Invalid Id, Id should be a positive number";
+                result.ErrorMessage.Add("Invalid Id, Id should be a positive number");
                 result.StatusCode = 400;
                 return result;
             }
             var book = _BookRepository.GetById(id);
             if (book == null)
             {
-                result.ErrorMessage = "ID Not Found";
+                result.ErrorMessage.Add("ID Not Found");
                 result.StatusCode = 404;
                 return result;
             }
@@ -66,7 +66,7 @@ namespace ServiceLayer
             Result result;
             result = Validate(book);
 
-            if (result.ErrorMessage != null)
+            if (result.ErrorMessage.Count!=0)
                 return result;
             if( _BookRepository.ReplaceBook(book))
             {
@@ -75,7 +75,7 @@ namespace ServiceLayer
             }
             else
             {
-                result.ErrorMessage = "No Id Match";
+                result.ErrorMessage.Add("No Id Match");
                 result.StatusCode = 404;
                 return result;
             }
@@ -86,7 +86,7 @@ namespace ServiceLayer
             Result result;
             result = Validate(book);
 
-            if (result.ErrorMessage != null)
+            if (result.ErrorMessage.Count!=0)
                 return result;
              
             var status = _BookRepository.AddBook(book);
@@ -99,7 +99,7 @@ namespace ServiceLayer
             else
             {
                 result.StatusCode = 404;
-                result.ErrorMessage = "book already exist";
+                result.ErrorMessage.Add("book Id already exist");
                 return result;
             }
                 
@@ -109,27 +109,26 @@ namespace ServiceLayer
             Result result = new Result();
             if (!book.Name.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Author.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Category.All(X => char.IsLetter(X) || X == ' ' || X == '.'))
             {
-                result.ErrorMessage = "Name, Category and Author: should contain only alphabets.";
+                result.ErrorMessage.Add("Name, Category and Author: should contain only alphabets.");
                 result.StatusCode = 400;
-                return result;
+                
             }
-            else if (book.Id < 0)
+            if (book.Id < 0)
             {
-                result.ErrorMessage = "Id: should be a positive integer.";
+                result.ErrorMessage.Add("Id: should be a positive integer.");
                 result.StatusCode = 400;
-                return result;
+                
             }
 
-            else if (book.Price < 0)
+            if (book.Price < 0)
             {
-                result.ErrorMessage = "Price: should be a positive number.";
+                result.ErrorMessage.Add("Price: should be a positive number.");
                 result.StatusCode = 400;
-                return result;
+                
             }
-            else
-            {
-                return result;
-            }
+            
+            return result;
+            
         }
     }
 }

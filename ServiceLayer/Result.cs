@@ -7,12 +7,12 @@ namespace ServiceLayer
     public class Result
     {
         public object Value;
-        public string ErrorMessage;
+        public List<string> ErrorMessage;
         public int StatusCode;
         public Result()
         {
             Value = null;
-            ErrorMessage = null;
+            ErrorMessage = new List<string>();
             StatusCode = 200;
         }
     }

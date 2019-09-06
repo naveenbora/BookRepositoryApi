@@ -16,7 +16,7 @@ namespace BooksApiTests
             BookRepository bookRepository = new BookRepository();
             Services services = new Services(bookRepository);
             var result = services.GetBooks();
-            Assert.Equal("No Books Found", result.ErrorMessage);
+            Assert.Equal("No Books Found", result.ErrorMessage[0]);
             Assert.Equal(404, result.StatusCode);
         }
     }

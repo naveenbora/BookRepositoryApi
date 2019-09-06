@@ -14,7 +14,7 @@ namespace BooksApiTests
             BookRepository bookRepository = new BookRepository();
             Services services = new Services(bookRepository);
             var result = services.AddBook(book);
-            Assert.Equal("Price: should be a positive number.", result.ErrorMessage);
+            Assert.Equal("Price: should be a positive number.", result.ErrorMessage[0]);
             Assert.Equal(400, result.StatusCode);
         }
     }
