@@ -60,6 +60,30 @@ namespace ServiceLayer
 
 
         }
+        public Result DeleteBookById(int id)
+        {
+            Result result = new Result();
+            if (id < 0)
+            {
+                result.ErrorMessage.Add("Invalid Id, Id should be a positive number");
+                result.StatusCode = 400;
+                return result;
+            }
+            var book = _BookRepository.DeleteById(id);
+            if (book == false)
+            {
+                result.ErrorMessage.Add("ID Not Found");
+                result.StatusCode = 404;
+                return result;
+            }
+            else
+            {
+                result.Value = "Deleted";
+                return result;
+            }
+
+
+        }
 
         public Result Update(Book book)
         {
@@ -70,6 +94,7 @@ namespace ServiceLayer
                 return result;
             if( _BookRepository.ReplaceBook(book))
             {
+                result.Value = "Succes";
                 return result;
 
             }
@@ -80,6 +105,8 @@ namespace ServiceLayer
                 return result;
             }
         }
+
+        
 
         public Result AddBook(Book book)
         {
@@ -92,7 +119,7 @@ namespace ServiceLayer
             var status = _BookRepository.AddBook(book);
             if (status == true)
             {
-
+                result.Value = "Success";
                 return result;
             }
                

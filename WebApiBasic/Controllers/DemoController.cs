@@ -62,10 +62,12 @@ namespace WebApiBasic.Controllers
         }
 
 
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-
-        //}
+        [HttpDelete("{id}")]
+        public Result Delete(int id)
+        {
+            var result = services.DeleteBookById(id);
+            HttpContext.Response.StatusCode = result.StatusCode;
+            return result;
+        }
     }
 }

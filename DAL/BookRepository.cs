@@ -53,5 +53,23 @@ namespace DAL
         {
             return books;
         }
+
+        public bool DeleteById(int id)
+        {
+            var _book = books.Find(X => X.Id == id);
+            if (_book == null)
+            {
+                return false;
+            }
+            else
+            {
+                var index = books.IndexOf(_book);
+                books.RemoveAt(index);
+
+                return true;
+            }
+                
+            
+        }
     }
 }
