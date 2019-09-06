@@ -52,10 +52,12 @@ namespace WebApiBasic.Controllers
 
 
         [HttpPut]
-        public bool Update([FromBody] Book book)
+        public Result Update([FromBody] Book book)
         {
+            var result = services.Update(book);
+            HttpContext.Response.StatusCode = result.StatusCode;
+            return result;
             
-            return services.Update(book);
 
         }
 

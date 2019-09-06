@@ -60,33 +60,32 @@ namespace ServiceLayer
 
         }
 
-        public bool Update(Book book)
+        public Result Update(Book book)
         {
-            return _BookRepository.ReplaceEmployee(book);
+            Result result;
+            result = Validate(book);
+
+            if (result.ErrorMessage != null)
+                return result;
+            if( _BookRepository.ReplaceEmployee(book))
+            {
+                return result;
+
+            }
+            else
+            {
+                result.ErrorMessage = "No Id Match";
+                return result;
+            }
         }
 
         public Result AddBook(Book book)
         {
-            Result result = new Result();
-            if (!book.Name.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Author.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Category.All(X => char.IsLetter(X) || X == ' ' || X == '.'))
-            {
-                result.ErrorMessage = "Name, Category and Author: should contain only alphabets.";
-                result.StatusCode = 400;
+            Result result;
+            result = Validate(book);
+
+            if (result.ErrorMessage != null)
                 return result;
-            }
-            else if (book.Id < 0)
-            {
-                result.ErrorMessage = "Id: should be a positive integer.";
-                result.StatusCode = 400;
-                return result;
-            }
-                
-            else if (book.Price < 0)
-            {
-                result.ErrorMessage = "Price: should be a positive number.";
-                result.StatusCode = 400;
-                return result;
-            }
              
             var status = _BookRepository.AddBook(book);
             if (status == true)
@@ -102,6 +101,33 @@ namespace ServiceLayer
                 return result;
             }
                 
+        }
+        public Result Validate(Book book)
+        {
+            Result result = new Result();
+            if (!book.Name.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Author.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Category.All(X => char.IsLetter(X) || X == ' ' || X == '.'))
+            {
+                result.ErrorMessage = "Name, Category and Author: should contain only alphabets.";
+                result.StatusCode = 400;
+                return result;
+            }
+            else if (book.Id < 0)
+            {
+                result.ErrorMessage = "Id: should be a positive integer.";
+                result.StatusCode = 400;
+                return result;
+            }
+
+            else if (book.Price < 0)
+            {
+                result.ErrorMessage = "Price: should be a positive number.";
+                result.StatusCode = 400;
+                return result;
+            }
+            else
+            {
+                return result;
+            }
         }
     }
 }
