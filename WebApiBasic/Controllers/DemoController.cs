@@ -8,6 +8,7 @@ using DAL.Model;
 using DAL;
 using ServiceLayer;
 
+
 namespace WebApiBasic.Controllers
 {
     [Route("api/[controller]")]
@@ -15,11 +16,13 @@ namespace WebApiBasic.Controllers
     public class DemoController : ControllerBase
     {
         private readonly BookRepository _BookRepository;
-        Services services;
-        public DemoController(BookRepository bookRepository)
+        private readonly Services services;
+        
+        public DemoController(BookRepository bookRepository, Services services)
         {
             _BookRepository = bookRepository;
-            services = new Services(bookRepository);
+            this.services = services;
+            
         }
         
         [HttpGet]
@@ -61,13 +64,18 @@ namespace WebApiBasic.Controllers
 
         }
 
-
+        
         [HttpDelete("{id}")]
         public Result Delete(int id)
         {
             var result = services.DeleteBookById(id);
             HttpContext.Response.StatusCode = result.StatusCode;
             return result;
+        }
+        [HttpDelete]
+        public object LogDetails()
+        {
+            return services.GetLoggers();
         }
     }
 }
