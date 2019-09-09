@@ -14,7 +14,7 @@ namespace BooksApiTests
             BookRepository bookRepository = new BookRepository();
             Services services = new Services(bookRepository);
             var result = services.AddBook(book);
-            Assert.Equal("Name, Category and Author: should contain only alphabets.", result.ErrorMessage[0]);
+            Assert.Equal("Name: should contain only alphabets.", result.ErrorMessage[0]);
             Assert.Equal(400, result.StatusCode);
         }
     }

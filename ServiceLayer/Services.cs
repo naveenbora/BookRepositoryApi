@@ -9,10 +9,12 @@ namespace ServiceLayer
     public class Services
     {
         private readonly BookRepository _BookRepository;
+        private readonly BookValidationThroughFluent _BookValidationThroughFluent;
 
         public Services(BookRepository bookRepository)
         {
             _BookRepository = bookRepository;
+            _BookValidationThroughFluent = new BookValidationThroughFluent();
         }
 
 
@@ -134,28 +136,16 @@ namespace ServiceLayer
         public Result Validate(Book book)
         {
             Result result = new Result();
-            if (!book.Name.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Author.All(X => char.IsLetter(X) || X == ' ' || X == '.') || !book.Category.All(X => char.IsLetter(X) || X == ' ' || X == '.'))
+            var resultFluent = _BookValidationThroughFluent.Validate(book);
+            if (!resultFluent.IsValid)
             {
-                result.ErrorMessage.Add("Name, Category and Author: should contain only alphabets.");
-                result.StatusCode = 400;
-                
+                foreach (var failure in resultFluent.Errors)
+                {
+                    result.ErrorMessage.Add(failure.ErrorMessage);
+                }
+                result.StatusCode = 400;              
             }
-            if (book.Id < 0)
-            {
-                result.ErrorMessage.Add("Id: should be a positive integer.");
-                result.StatusCode = 400;
-                
-            }
-
-            if (book.Price < 0)
-            {
-                result.ErrorMessage.Add("Price: should be a positive number.");
-                result.StatusCode = 400;
-                
-            }
-            
             return result;
-            
         }
     }
 }
