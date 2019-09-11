@@ -28,8 +28,8 @@ namespace WebApiBasic
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<BookRepository>();
-            services.AddSingleton<Services>();
+            services.AddSingleton<IBookRepository,BookRepository>();
+            services.AddSingleton<IServices,Services>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

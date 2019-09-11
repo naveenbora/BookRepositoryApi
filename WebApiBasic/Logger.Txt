@@ -1,13 +1,111 @@
-Time:9/9/2019 7:23:41 PM
+Time:    9/11/2019 3:51:06 PM
 Errors:
-No Books Found   ,    
-EventGetBooks
-StatusCode404
+No Books Found,    
+Event:     GetBooks
+StatusCode:   404
 -------------------------------------------------------------
 
-Time:9/9/2019 7:23:59 PM
+Time:    9/11/2019 3:51:14 PM
+Event:     AddBook
+StatusCode:   200
+-------------------------------------------------------------
 
-EventAddBook
-StatusCode200
+Time:    9/11/2019 3:51:16 PM
+Errors:
+book Id already exist,    
+Event:     AddBook
+StatusCode:   404
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:51:27 PM
+Event:     AddBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:51:29 PM
+Errors:
+book Id already exist,    
+Event:     AddBook
+StatusCode:   404
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:51:36 PM
+Errors:
+Author: should contain only alphabets.,    
+Event:     AddBook
+StatusCode:   400
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:51:52 PM
+Event:     AddBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:51:55 PM
+Event:     GetBooks
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:00 PM
+Event:     GetBookById8
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:07 PM
+Errors:
+ID Not Found,    
+Event:     GetBookById80
+StatusCode:   404
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:22 PM
+Errors:
+ID Not Found,    
+Event:     GetBookById0
+StatusCode:   404
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:30 PM
+Errors:
+Invalid Id, Id should be a positive number,    
+Event:     GetBookById-8
+StatusCode:   400
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:42 PM
+Event:     UpdateBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:45 PM
+Event:     UpdateBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:46 PM
+Event:     UpdateBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:47 PM
+Event:     UpdateBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:48 PM
+Event:     UpdateBook
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:52:59 PM
+Event:     DeleteBookById8
+StatusCode:   200
+-------------------------------------------------------------
+
+Time:    9/11/2019 3:53:01 PM
+Errors:
+ID Not Found,    
+Event:     DeleteBookById8
+StatusCode:   404
 -------------------------------------------------------------
 

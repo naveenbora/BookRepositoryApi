@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DAL.Model;
 using DAL;
 using ServiceLayer;
-
+using Unity;
 
 namespace WebApiBasic.Controllers
 {
@@ -15,10 +15,12 @@ namespace WebApiBasic.Controllers
     [ApiController]
     public class DemoController : ControllerBase
     {
-        private readonly BookRepository _BookRepository;
-        private readonly Services services;
+        private readonly IBookRepository _BookRepository;
+        private readonly IServices services;
+        //IUnityContainer container = new UnityContainer();
         
-        public DemoController(BookRepository bookRepository, Services services)
+
+        public DemoController(IBookRepository bookRepository, IServices services)
         {
             _BookRepository = bookRepository;
             this.services = services;
