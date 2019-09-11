@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public class BookRepository
+    public class BookRepository:IBookRepository
     {
         public List<Book> books;
         public BookRepository()

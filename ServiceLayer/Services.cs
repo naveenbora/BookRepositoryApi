@@ -1,5 +1,4 @@
-﻿
-using DAL;
+﻿using DAL;
 using DAL.Model;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,13 @@ using System.Linq;
 
 namespace ServiceLayer
 {
-    public class Services
+    public class Services:IServices
     {
-        private readonly BookRepository _BookRepository;
+        private readonly IBookRepository _BookRepository;
         private readonly BookValidationThroughFluent _BookValidationThroughFluent;
         private readonly List<Logger> _Loggers;
 
-        public Services(BookRepository bookRepository)
+        public Services(IBookRepository bookRepository)
         {
             _BookRepository = bookRepository;
             _BookValidationThroughFluent = new BookValidationThroughFluent();
@@ -185,9 +184,10 @@ namespace ServiceLayer
                 var LogValue = "";
                 foreach (var item in logger.Errors)
                 {
-                    LogValue += item + "   ,    ";
+                    LogValue += item + ",    ";
                 }
-                streamWriter.WriteLine(LogValue);
+                if(LogValue.Length>0)
+                    streamWriter.WriteLine(LogValue);
                 streamWriter.WriteLine("Event:     "+logger.Event);
                 streamWriter.WriteLine("StatusCode:   "+logger.StatusCode.ToString());
                 LogValue = "-------------------------------------------------------------\n";
