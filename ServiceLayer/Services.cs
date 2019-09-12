@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using ServiceStack.Redis;
 
 namespace ServiceLayer
 {
@@ -13,13 +14,19 @@ namespace ServiceLayer
         private readonly IBookRepository _BookRepository;
         private readonly BookValidationThroughFluent _BookValidationThroughFluent;
         private readonly List<Logger> _Loggers;
-
+        RedisManagerPool manager = new RedisManagerPool("localhost:6379");
+        IRedisClient Client;
         public Services(IBookRepository bookRepository)
         {
             _BookRepository = bookRepository;
             _BookValidationThroughFluent = new BookValidationThroughFluent();
             _Loggers = new List<Logger>();
-            
+   
+            Client = manager.GetClient();
+            Client.FlushAll();
+           
+
+
         }
 
 
@@ -57,20 +64,37 @@ namespace ServiceLayer
                 _Loggers.Add(loggerGetBook);
                 return result;
             }
-            var book = _BookRepository.GetById(id);
-            if (book == null)
-            {
-                result.ErrorMessage.Add("ID Not Found");
-                result.StatusCode = 404;
-                
-                
-            }
-            else
-            {
-               
+            
+            
+                Logger logger1;
+                Book book;
+                if (Client.Get<Book>(id.ToString()) != null)
+                {
+                    book = Client.Get<Book>(id.ToString());
+                    logger1 = new Logger { Errors = result.ErrorMessage, Time = DateTime.Now.ToString(), Event = $"Retrieved from cache", StatusCode = result.StatusCode };
+                    _Loggers.Add(logger1);
+
+                }
+                else
+                {
+                    
+                     book = _BookRepository.GetById(id);
+                    if (book == null)
+                    {
+                        result.ErrorMessage.Add("ID Not Found");
+                        result.StatusCode = 404;
+
+                    }
+                    else
+                    {
+                        Client.Set(book.Id.ToString(), book);
+                        logger1 = new Logger { Errors = result.ErrorMessage, Time = DateTime.Now.ToString(), Event = $"Added in cache", StatusCode = result.StatusCode };
+                        _Loggers.Add(logger1);
+                    }
+                }
                 result.Value = book;
                 
-            }
+            
             Logger logger = new Logger { Errors = result.ErrorMessage, Time = DateTime.Now.ToString(), Event = $"GetBookById{id}", StatusCode = result.StatusCode };
             _Loggers.Add(logger);
             return result;
@@ -91,12 +115,15 @@ namespace ServiceLayer
             var book = _BookRepository.DeleteById(id);
             if (book == false)
             {
+                
                 result.ErrorMessage.Add("ID Not Found");
                 result.StatusCode = 404;
                 
             }
             else
             {
+
+                Client.Remove(id.ToString());
                 result.Value = "Deleted";
                 
             }
@@ -117,6 +144,8 @@ namespace ServiceLayer
             }
             if( _BookRepository.ReplaceBook(book))
             {
+                Client.Remove(book.Id.ToString());
+                Client.Set(book.Id.ToString(), book);
                 result.Value = "Succes";
             }
             else
@@ -145,6 +174,8 @@ namespace ServiceLayer
             var status = _BookRepository.AddBook(book);
             if (status == true)
             {
+               
+                
                 result.Value = "Success";  
             }
                

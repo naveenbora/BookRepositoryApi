@@ -7,10 +7,11 @@ namespace DAL
     public class BookRepository:IBookRepository
     {
         public List<Book> books;
+
         public BookRepository()
         {
             books = new List<Book>();
-
+            
         }
 
         public bool AddBook(Book book)

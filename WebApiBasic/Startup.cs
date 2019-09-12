@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ServiceLayer;
+using Unity;
+using Unity.Resolution;
+using WebApiBasic.Controllers;
 
 namespace WebApiBasic
 {
@@ -28,8 +31,16 @@ namespace WebApiBasic
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IBookRepository,BookRepository>();
-            services.AddSingleton<IServices,Services>();
+            //IUnityContainer container = new UnityContainer();
+            //container.RegisterType<BookRepository>();
+            //container.RegisterType<Services>();
+            // container.RegisterType<IBookRepository, BookRepository>("BookRepo");
+            // container.RegisterType<IServices, Services>("ServicesRepo");
+            // var bookRepo = container.Resolve<IBookRepository>("BookRepo");
+            //var serviceRepo = container.Resolve<IServices>("ServicesRepo");
+
+            services.AddSingleton<IBookRepository, BookRepository>();
+            services.AddSingleton<IServices, Services>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +58,7 @@ namespace WebApiBasic
 
             app.UseHttpsRedirection();
             app.UseMvc();
+           // app.UseRouter
         }
     }
 }
